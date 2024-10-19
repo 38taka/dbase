@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 
 # データファイルを読み込み
-my $data_file = '';
+my $data_file = 'data.dat';
 open my $fh, '<', $data_file or die "Could not open '$data_file': $!";
 my @users = <$fh>;
 close $fh;
