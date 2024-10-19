@@ -1,7 +1,4 @@
 #!/usr/bin/perl
-use strict;
-use warnings;
-use CGI;
 
 # データファイルを読み込み
 my $data_file = 'ata.dat';
