@@ -26,8 +26,8 @@ foreach my $user (@users) {
 }
 
 # HTML出力
-header;
-start_html('ユーザー情報検索結果');
+print header;
+print start_html('ユーザー情報検索結果');
 if ($result) {
     print h1("検索結果"),
           p("名前: $result->{name}"),
@@ -36,6 +36,6 @@ if ($result) {
           p("メールアドレス: $result->{email}"),
           p("パスワード: $result->{password}");
 } else {
-    h1("該当するユーザーが見つかりません");
+    print h1("該当するユーザーが見つかりません");
 }
-end_html;
+print end_html;
