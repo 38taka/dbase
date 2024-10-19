@@ -1,22 +1,20 @@
-#!/usr/bin/perl
+#!/usr/bin/env perl
 use strict;
 use warnings;
 use CGI qw(:standard);
-use Encode;
 
-# ƒf[ƒ^ƒtƒ@ƒCƒ‹‚ğ“Ç‚İ‚İ
-my $data_file = 'data.dat'; # XAMPP‚Åg‚¤ê‡‚ÌƒpƒX
-open my $fh, '<:encoding(shiftjis)', $data_file or die "Could not open '$data_file': $!";
+# ãƒ‡ãƒ¼ã‚¿ãƒ•ã‚¡ã‚¤ãƒ«ã‚’èª­ã¿è¾¼ã¿
+my $data_file = 'data.dat';
+open my $fh, '<', $data_file or die "Could not open '$data_file': $!";
 my @users = <$fh>;
 close $fh;
 
-# ƒNƒGƒŠ‚ğæ“¾
-my $query = decode('shiftjis', param('query'));
+# ã‚¯ã‚¨ãƒªã‚’å–å¾—
+my $query = param('query');
 
-# ƒ†[ƒU[î•ñ‚ğŒŸõ
+# ãƒ¦ãƒ¼ã‚¶ãƒ¼æƒ…å ±ã‚’æ¤œç´¢
 my $result;
 foreach my $user (@users) {
-    chomp $user;
     my ($name, $id, $account, $email, $password) = split /,/, $user;
     if ($id eq $query || $account eq $query || $email eq $query) {
         $result = {
@@ -30,17 +28,17 @@ foreach my $user (@users) {
     }
 }
 
-# HTMLo—Í
-print header(-charset => 'Shift_JIS');
-print start_html(-title => 'ƒ†[ƒU[î•ñŒŸõŒ‹‰Ê', -encoding => 'Shift_JIS');
+# HTMLå‡ºåŠ›
+print header;
+print start_html('ãƒ¦ãƒ¼ã‚¶ãƒ¼æƒ…å ±æ¤œç´¢çµæœ');
 if ($result) {
-    print h1("ŒŸõŒ‹‰Ê"),
-          p("–¼‘O: " . encode('shiftjis', $result->{name})),
-          p("ID: " . encode('shiftjis', $result->{id})),
-          p("ƒAƒJƒEƒ“ƒg: " . encode('shiftjis', $result->{account})),
-          p("ƒ[ƒ‹ƒAƒhƒŒƒX: " . encode('shiftjis', $result->{email})),
-          p("ƒpƒXƒ[ƒh: " . encode('shiftjis', $result->{password}));
+    print h1("æ¤œç´¢çµæœ"),
+          p("åå‰: $result->{name}"),
+          p("ID: $result->{id}"),
+          p("ã‚¢ã‚«ã‚¦ãƒ³ãƒˆ: $result->{account}"),
+          p("ãƒ¡ãƒ¼ãƒ«ã‚¢ãƒ‰ãƒ¬ã‚¹: $result->{email}"),
+          p("ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰: $result->{password}");
 } else {
-    print h1("ŠY“–‚·‚éƒ†[ƒU[‚ªŒ©‚Â‚©‚è‚Ü‚¹‚ñ");
+    print h1("è©²å½“ã™ã‚‹ãƒ¦ãƒ¼ã‚¶ãƒ¼ãŒè¦‹ã¤ã‹ã‚Šã¾ã›ã‚“");
 }
 print end_html;
